@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Rupesh Dangi
@@ -22,9 +23,18 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDetails authenticateUser(AuthenticationRequest authenticationRequest){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-        return (UserDetails) authentication.getPrincipal();
+//    public UserDetails authenticateUser(AuthenticationRequest authenticationRequest){
+//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+//        return (UserDetails) authentication.getPrincipal();
+//    }
+//
+//
+    public User getUserById(int id){
+        return userRepository.findById(id).get();
+    }
+
+    public List<User> getUsers(){
+        return userRepository.findAll();
     }
     public int addNewUser(String username, String password,Role role) {
         if (userRepository.findUserByUsername(username).isPresent()) {
@@ -36,12 +46,9 @@ public class UserService {
         user.setRole(role);
         return userRepository.save(user).getId();
     }
-
-    public User getUserById(int id){
-        return userRepository.findById(id).get();
+    public boolean authenticate(AuthenticationRequest authenticationRequest){
+        Optional<User> user =userRepository.findUserByUsername(authenticationRequest.getUsername());
+        return user.filter(value -> passwordEncoder.matches(authenticationRequest.getPassword(), value.getPassword())).isPresent();
     }
 
-    public List<User> getUsers(){
-        return userRepository.findAll();
-    }
 }

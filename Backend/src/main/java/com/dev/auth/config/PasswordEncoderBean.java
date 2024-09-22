@@ -16,4 +16,5 @@ public class PasswordEncoderBean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

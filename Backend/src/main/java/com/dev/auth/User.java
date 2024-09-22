@@ -49,7 +49,6 @@ public class User {
           public Collection<? extends GrantedAuthority> getAuthorities() {
               return Collections.singletonList((GrantedAuthority) () -> role.name());
           }
-
           @Override
           public String getPassword() {
               return password;

@@ -1,10 +1,11 @@
 package com.dev.auth.controller;
 
+import com.dev.auth.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/oauth/token")
 public class TokenController {
 //    private final JWTService jwtService;
-//    private final UserService userService;
-    @PostMapping
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody @Validated AuthenticationRequest authenticationRequest){
+      private final UserService userService;
+//    @PostMapping
+//    public ResponseEntity<?> createAuthenticationToken(@RequestBody @Validated AuthenticationRequest authenticationRequest){
 //        log.info("Authentication user: {}", authenticationRequest.getUsername());
 //        UserDetails userDetails = userService.authenticateUser(authenticationRequest);
 //        TokenResponse jwtToken = TokenResponse.builder()
@@ -29,14 +30,14 @@ public class TokenController {
 //                .roles(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
 //                .jwt(jwtService.generateToken(userDetails))
 //                .build();
-        /*
-        THIS JUST CHECKS FOR TEST USER
-         */
-        if(authenticationRequest.getUsername().equals("test") && authenticationRequest.getPassword().equals("test")){
-            return ResponseEntity.ok().build();
-        }else{
-            return ResponseEntity.badRequest().build();
+//        return ResponseEntity.ok(jwtToken);
+//    }
+        public ResponseEntity<?> authenticate(@RequestBody @Validated AuthenticationRequest authenticationRequest){
+        log.info("Authentication user: {}", authenticationRequest.getUsername());
+        if(userService.authenticate(authenticationRequest)){
+            return ResponseEntity.ok("Success");
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 }
