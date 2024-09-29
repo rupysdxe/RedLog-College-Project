@@ -22,13 +22,10 @@ import java.util.List;
 public class AuthenticationFilter extends OncePerRequestFilter {
     private final List<AuthenticationFilterStrategy> authenticationStrategies;
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException
-    {
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws
+            ServletException, IOException {
         log.info("Request received for path {} and method {}", request.getRequestURI(), request.getMethod());
-        for (AuthenticationFilterStrategy strategy : authenticationStrategies)
-        {
+        for (AuthenticationFilterStrategy strategy : authenticationStrategies) {
             if (strategy.supports(request)) {
                 log.info("Strategy {} supports the request", strategy.getClass().getName());
                 strategy.authenticate(request, response, filterChain);

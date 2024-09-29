@@ -24,8 +24,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig
-{
+public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
     private final AuthenticationFilter authenticationFilter;

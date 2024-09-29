@@ -10,8 +10,8 @@ import java.io.IOException;
  * @author Rupesh Dangi
  * @date: 2024/09/08 21/05
  */
-public interface AuthenticationFilterStrategy
-{
+public interface AuthenticationFilterStrategy {
     boolean supports(HttpServletRequest request);
-    void authenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException;
+    void authenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException;
 }

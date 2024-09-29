@@ -23,7 +23,8 @@ public class TokenEndpointStrategy implements AuthenticationFilterStrategy {
         return request.getRequestURI().equals(TOKEN_ENDPOINT);
     }
     @Override
-    public void authenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    public void authenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException {
         filterChain.doFilter(request, response);
     }
 }

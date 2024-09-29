@@ -37,7 +37,8 @@ public class JwtTokenAuthenticationStrategy implements AuthenticationFilterStrat
         return supportedEndpoints.stream().anyMatch(request.getRequestURI()::startsWith);
     }
     @Override
-    public void authenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    public void authenticate(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException {
         String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
             String jwt = authorizationHeader.substring(BEARER_PREFIX.length());
@@ -45,7 +46,8 @@ public class JwtTokenAuthenticationStrategy implements AuthenticationFilterStrat
             Collection<GrantedAuthority> authorities = jwtService.extractAuthoritiesFromToken(jwt);
             if (username != null && !username.isEmpty() && SecurityContextHolder.getContext().getAuthentication() == null) {
                 if (jwtService.validateToken(jwt)) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    UsernamePasswordAuthenticationToken authentication = new
+                            UsernamePasswordAuthenticationToken(username, null, authorities);
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     log.info("Token is valid and username: {} is set in Security Context.", username);
