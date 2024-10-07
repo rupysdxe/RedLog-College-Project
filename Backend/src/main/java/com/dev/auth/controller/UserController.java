@@ -5,9 +5,12 @@ import com.dev.auth.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +32,22 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
     @GetMapping
-    public ResponseEntity<?> getUsers(){
+    public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok(userService.getUsers());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable @Min(0) int id){
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+    @PutMapping
+    public ResponseEntity<Void> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.updatePassword(username,updatePasswordDto.oldPassword,updatePasswordDto.newPassword);
+        return ResponseEntity.ok().build();
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable @Min(0) int id){
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
 }

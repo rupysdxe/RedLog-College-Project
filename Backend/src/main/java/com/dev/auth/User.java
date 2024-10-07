@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,7 +17,7 @@ import java.util.Collections;
  * @author Rupesh Dangi
  * @date: 2024/09/08 20/19
  */
-@Entity
+@Entity(name = "USER_TABLE")
 @Getter
 @Setter
 public class User {
@@ -27,7 +26,6 @@ public class User {
     private int id;
     @NotEmpty
     @Column(unique = true)
-    @Email
     private String username;
     @NotEmpty
     @JsonIgnore
