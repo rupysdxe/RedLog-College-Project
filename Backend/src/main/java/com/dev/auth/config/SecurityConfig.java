@@ -49,7 +49,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests().mvcMatchers(Constants.TOKEN_ENDPOINT).permitAll()
                 .and()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests().anyRequest().permitAll()
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)

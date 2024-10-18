@@ -29,6 +29,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { dataProvider } from "dataProvider";
 import { UserList } from "pages/users/list";
 import { UserCreate } from "pages/users/create";
+import { LogList } from "pages/log/list";
 
 const axiosInstance:AxiosInstance = axios.create();
 
@@ -76,6 +77,7 @@ function App() {
               )} 
               
               resources={[
+              
                 {
                   name: "users",
                   list: "/users",
@@ -83,6 +85,10 @@ function App() {
                   meta: {
                     canDelete: false,
                   },
+                },
+                {
+                  name: "logs",
+                  list: "/logs",
                 }
               ]}
               options={{
@@ -107,6 +113,11 @@ function App() {
                   <Route path="/users">
                     <Route index element={<UserList />} />
                   </Route>
+
+                  <Route path="/logs">
+                    <Route index element={<LogList />} />
+                  </Route>
+
                   <Route path="/users/create">
                     <Route index element={<UserCreate />} />
                   </Route>

@@ -42,7 +42,7 @@ public class UserController {
     @PutMapping
     public ResponseEntity<Void> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        userService.updatePassword(username,updatePasswordDto.oldPassword,updatePasswordDto.newPassword);
+        userService.updatePassword(username,updatePasswordDto.getOldPassword(),updatePasswordDto.getNewPassword());
         return ResponseEntity.ok().build();
     }
     @DeleteMapping("/{id}")
